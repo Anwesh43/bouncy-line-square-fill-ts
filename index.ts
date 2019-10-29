@@ -199,3 +199,25 @@ class LineRectTop {
         this.curr.startUpdating(cb)
     }
 }
+
+class Renderer {
+
+    lrt : LineRectTop = new LineRectTop()
+    animator : Animator = new Animator()
+
+    render(context : CanvasRenderingContext2D) {
+        this.lrt.draw(context)
+    }
+
+    handleTap(cb : Function) {
+        this.lrt.startUpdating(() => {
+            this.animator.start(() => {
+                cb()
+                this.lrt.update(() => {
+                    this.animator.stop()
+                    cb()
+                })
+            })
+        })
+    }
+}
