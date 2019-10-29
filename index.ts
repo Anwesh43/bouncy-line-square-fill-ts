@@ -118,6 +118,7 @@ class DrawingUtil {
         }
         DrawingUtil.drawLine(context, 0, size, 0, size - size * sf)
         const sc : number = ScaleUtil.divideScale(scale, 1, 2)
+        context.strokeRect(-size / 2, -size, size, size)
         context.fillRect(-size / 2, -size * sc, size, size * sc)
     }
 
