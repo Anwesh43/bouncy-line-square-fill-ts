@@ -159,7 +159,7 @@ class LTRNode {
         this.state.update(cb)
     }
 
-    startUdpating(cb : Function) {
+    startUpdating(cb : Function) {
         this.state.startUpdating(cb)
     }
 
@@ -173,5 +173,29 @@ class LTRNode {
         }
         cb()
         return this
+    }
+}
+
+class LineRectTop {
+
+    root : LTRNode = new LTRNode(0)
+    curr : LTRNode = this.root
+    dir : number = 1
+
+    draw(context : CanvasRenderingContext2D) {
+        this.root.draw(context)
+    }
+
+    update(cb : Function) {
+        this.curr.update(() => {
+            this.curr = this.curr.getNext(this.dir, () => {
+                this.dir *= -1
+            })
+            cb()
+        })
+    }
+
+    startUpdating(cb : Function) {
+        this.curr.startUpdating(cb)
     }
 }
