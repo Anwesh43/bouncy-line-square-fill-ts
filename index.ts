@@ -6,6 +6,7 @@ const sizeFactor : number = 2.9
 const foreColor : string = "#0D47A1"
 const backColor : string = "#BDBDBD"
 const nodes : number = 5
+const delay : number = 30
 
 class Stage {
 
@@ -35,5 +36,25 @@ class Stage {
         stage.initCanvas()
         stage.render()
         stage.handleTap()
+    }
+}
+
+class Animator {
+
+    animated : boolean = false
+    interval : number
+
+    start(cb : Function) {
+        if (!this.animated) {
+            this.animated = true
+            this.interval = setInterval(cb, delay)
+        }
+    }
+
+    stop() {
+        if (this.animated) {
+            this.animated = false
+            clearInterval(this.interval)
+        }
     }
 }
