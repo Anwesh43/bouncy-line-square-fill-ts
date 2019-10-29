@@ -97,3 +97,36 @@ class ScaleUtil {
         return Math.sin(Math.PI * scale)
     }
 }
+
+class DrawingUtil {
+
+    static drawLine(context : CanvasRenderingContext2D, x1 : number, y1 : number, x2 : number, y2 : number) {
+        context.beginPath()
+        context.moveTo(x1, y1)
+        context.lineTo(x2, y2)
+        context.stroke()
+    }
+
+    static drawLineToRect(context : CanvasRenderingContext2D, size : number, scale : number) {
+        const sf : number = ScaleUtil.sinify(scale)
+        for (var i = 0; i < 2; i++) {
+            DrawingUtil.drawLine(context, 0, size, (size / 2) * (1 - sf) * (1 - 2 * i), size)
+        }
+        DrawingUtil.drawLine(context, 0, size, 0, size - size * sf)
+        const sc : number = ScaleUtil.divideScale(scale, 1, 2)
+        context.fillRect(-size / 2, -size * sc, size, size * sc)
+    }
+
+    static drawLTRNode(context : CanvasRenderingContext2D, i : number, scale : number) {
+        const gap : number = w / (nodes + 1)
+        const size : number = gap / sizeFactor
+        context.lineCap = 'round'
+        context.lineWidth = Math.min(w, h) / strokeFactor
+        context.strokeStyle = foreColor
+        context.fillStyle = foreColor
+        context.save()
+        context.translate(gap * (i + 1), h / 2)
+        DrawingUtil.drawLineToRect(context, size, scale)
+        context.restore()
+    }
+}
